@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Binubuwakan Cold Spring</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      background-image: url('binubuwakan.jpg.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      height: 100vh;
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .welcome {
+      background-color: rgba(255, 255, 255, 0.85);
+      padding: 30px;
+      text-align: center;
+      border-radius: 15px;
+      box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.2);
+      width: 350px;
+      backdrop-filter: blur(5px);
+    }
+
+    .welcome h2 {
+      font-size: 24px;
+      margin-bottom: 20px;
+      font-weight: bold;
+      color: #2a3d66;
+    }
+
+    .btn {
+      width: 80%;
+      padding: 15px;
+      background-color: #4c6aaf;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+      background-color: #45a049;
+      transform: scale(1.05);
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    .btn:focus {
+      outline: none;
+    }
+
+    .admin-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #4c83a0;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 10px;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      z-index: 999;
+    }
+
+    .admin-btn:hover {
+      background-color: #555;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <div class="welcome">
+      <h2>Welcome to Binubuwakan Cold Spring</h2>
+      <form id="first" onsubmit="return false;">
+        <button class="btn" onclick="location.href='login.html';">Log In</button><br><br>
+        <button class="btn" onclick="location.href='sign-up.html';">Sign Up</button><br><br>
+      </form>
+    </div>
+  </div>
+
+  <!-- Admin Button Bottom Right -->
+  <button class="admin-btn" onclick="location.href='adminlogin.html';">Admin</button>
+
+</body>
+
+</html>

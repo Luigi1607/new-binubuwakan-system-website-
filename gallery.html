@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gallery</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f0f0f0;
+      color: #333;
+    }
+
+    header {
+      background-image: url('binubuwakan1.1.jpg');
+      color: white;
+      position: relative;
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+    }
+
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 50px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .logo {
+      font-size: 1.8em;
+      font-weight: bold;
+      color: #fff;
+      letter-spacing: 1px;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      margin-left: 25px;
+      font-weight: 500;
+      font-size: 1.05em;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: #b2dfdb;
+    }
+
+    h1 {
+      text-align: center;
+      padding: 1em;
+      font-size: 2.5em;
+      color: #444;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 15px;
+      padding: 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .gallery-item:hover {
+      transform: scale(1.03);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.1);
+    }
+
+    /* Lightbox effect */
+    .lightbox {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.8);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .lightbox img {
+      max-width: 90%;
+      max-height: 80vh;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+    }
+
+    .lightbox:target {
+      display: flex;
+    }
+
+    .close {
+      position: absolute;
+      top: 30px;
+      right: 40px;
+      color: white;
+      font-size: 2em;
+      text-decoration: none;
+    }
+
+    footer {
+      background: #00b894;
+      color: white;
+      padding: 30px 20px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+          <div class="logo">Binubuwakan Cold Spring Resort</div>
+          <div class="nav-links">
+            <a href="home.html">Home</a>
+            <a href="gallery.html">Gallery</a>
+            <a href="book.html">Book</a>
+            <a href="about.html">About</a>
+            <a href="index.html">Log-out</a>
+          </div>
+        </div>
+      </header>
+
+<h1>Gallery</h1>
+
+<div class="gallery">
+  <a href="#img1" class="gallery-item">
+    <img src="binubuwakan2.jpeg" alt="Gallery Image 1">
+  </a>
+  <a href="#img2" class="gallery-item">
+    <img src="paddleboard2.jpeg" alt="Gallery Image 2">
+  </a>
+  <a href="#img3" class="gallery-item">
+    <img src="child swimming.jpeg" alt="Gallery Image 3">
+  </a>
+  <a href="#img4" class="gallery-item">
+    <img src="flow.jpeg" alt="Gallery Image 4">
+  </a>
+  <a href="#img5" class="gallery-item">
+    <img src="lifejacket2.jpeg" alt="Gallery Image 5">
+  </a>
+  <a href="#img6" class="gallery-item">
+    <img src="cottage6.jpg" alt="Gallery Image 6">
+  </a>
+  <a href="#img7" class="gallery-item">
+    <img src="swimming.jpeg" alt="Gallery Image 7">
+  </a>
+  <a href="#img8" class="gallery-item">
+    <img src="binubuwakan.jpg" alt="Gallery Image 8">
+  </a>
+  <!-- Add more images as needed -->
+</div>
+
+<footer>
+    &copy; 2025 Binubuwakan Cold Spring Resort. All Rights Reserved.
+  </footer>
+
+</body>
+</html>

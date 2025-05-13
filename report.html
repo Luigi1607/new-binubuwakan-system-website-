@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin Report Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f1f1f1;
+    }
+
+    .sidebar {
+      width: 220px;
+      background: #2c3e50;
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      padding: 20px 0;
+      color: #ecf0f1;
+      text-align: center;
+    }
+
+    .sidebar img {
+      width: 100px;
+      margin-bottom: 10px;
+    }
+
+    .sidebar h4 {
+      margin-bottom: 30px;
+      font-size: 18px;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      width: 100%;
+    }
+
+    .sidebar ul li {
+      padding: 12px 0;
+      transition: 0.2s;
+    }
+
+    .sidebar ul li a {
+      color: #ffffff;
+      text-decoration: none;
+      display: block;
+      width: 100%;
+    }
+
+    .sidebar ul li:hover,
+    .sidebar ul li.active {
+      background: #34495e;
+    }
+
+    .main-content {
+      margin-left: 220px;
+      padding: 30px;
+    }
+
+    .admin-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+
+    .card-box {
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .card-box h5 {
+      margin: 10px 0;
+      font-size: 16px;
+    }
+
+    .card-box span {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .active { background-color: #ffeb3b; }
+    .inactive { background-color: #e91e63; color: white; }
+    .pending { background-color: #9e9e9e; color: white; }
+    .confirmed { background-color: #2196f3; color: white; }
+    .cancelled { background-color: #f44336; color: white; }
+    .activity { background-color: #4caf50; color: white; }
+    .unread { background-color: #009688; color: white; }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <img src="logo.png" alt="Logo">
+    <h4>Binubuwakan Admin</h4>
+    <ul>
+      <li><a href="request.html">Requests</a></li>
+      <li><a href="approved requests.html">Approved Requests</a></li>
+      <li><a href="admin.html">Maintenance</a></li>
+      <li class="active"><a href="#">Report Lists</a></li>
+    </ul>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <div class="admin-header">
+      <h3>Report Dashboard</h3>
+      <div><strong>Administrator</strong></div>
+      <button onclick="logout()" class="btn btn-danger btn-sm">Logout</button>
+    </div>
+
+    <div class="card-grid">
+      <div class="card-box active">
+        <h5>Active Cottages</h5>
+        <span id="activeRoom">5</span>
+      </div>
+      <div class="card-box inactive">
+        <h5>Inactive Cottages</h5>
+        <span id="inactiveRoom">0</span>
+      </div>
+      <div class="card-box pending">
+        <h5>Pending Reservation</h5>
+        <span id="pendingRes">1</span>
+      </div>
+      <div class="card-box confirmed">
+        <h5>Confirmed Reservation</h5>
+        <span id="confirmedRes">7</span>
+      </div>
+      <div class="card-box cancelled">
+        <h5>Cancelled Reservation</h5>
+        <span id="cancelledRes">0</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const requests = JSON.parse(localStorage.getItem("requests") || "[]");
+    const statusCount = { Pending: 0, Confirmed: 0, Cancelled: 0 };
+
+    requests.forEach(req => {
+      if (statusCount[req.status] !== undefined) {
+        statusCount[req.status]++;
+      }
+    });
+
+    document.getElementById("pendingRes").textContent = statusCount.Pending;
+    document.getElementById("confirmedRes").textContent = statusCount.Confirmed;
+    document.getElementById("cancelledRes").textContent = statusCount.Cancelled;
+
+    document.getElementById("activeRoom").textContent = 5;
+    document.getElementById("inactiveRoom").textContent = 0;
+
+    function logout() {
+    window.location.href = "index.html"; 
+  }
+  </script>
+</body>
+</html>

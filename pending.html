@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Reservation Status</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      background: #f5f9f8;
+    }
+
+    header {
+      background: url('binubuwakan1.1.jpg') no-repeat center center/cover;
+      color: white;
+      padding: 30px 20px;
+      text-align: center;
+      position: relative;
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    header h1 {
+      position: relative;
+      z-index: 1;
+      font-size: 2.5rem;
+      margin: 0;
+    }
+
+    .status-container {
+      max-width: 600px;
+      margin: 60px auto;
+      padding: 30px;
+      background: white;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
+      text-align: center;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    .status-container h2 {
+      margin-bottom: 20px;
+      font-size: 2rem;
+    }
+
+    .status-container p {
+      font-size: 1.1rem;
+      color: #555;
+      margin-bottom: 30px;
+    }
+
+    .status-container .status {
+      display: inline-block;
+      padding: 12px 25px;
+      border-radius: 25px;
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+
+    .pending { background: #fff3cd; color: #856404; }
+    .approved { background: #d4edda; color: #155724; }
+    .cancelled { background: #f8d7da; color: #721c24; }
+
+    button {
+      margin-top: 20px;
+      padding: 12px 28px;
+      background-color: #e91e63;
+      color: white;
+      border: none;
+      border-radius: 30px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #c2185b;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .book-button {
+  display: inline-block;
+  padding: 15px 35px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: white;
+  background: linear-gradient(135deg, #00bfa5, #00695c);
+  text-decoration: none;
+  border-radius: 50px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s ease;
+}
+
+.book-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.book-button::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -50%;
+  width: 50%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.2);
+  transform: skewX(-25deg);
+  transition: 0.5s;
+}
+
+.book-button:hover::after {
+  left: 150%;
+}
+
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Reservation Status</h1>
+  </header>
+
+  <div class="status-container" id="statusContent">
+    <!-- Status will be loaded here dynamically -->
+  </div>
+  <div style="text-align: center; margin: 40px 0;">
+    <a href="book.html" class="book-button">GO BACK</a>
+  </div>
+  
+  <script>
+    const email = localStorage.getItem('currentUserEmail'); // Assume current user email is stored
+    const statusContainer = document.getElementById('statusContent');
+
+    function loadStatus() {
+      const requests = JSON.parse(localStorage.getItem('requests') || '[]');
+      const approved = JSON.parse(localStorage.getItem('approvedRequests') || '[]');
+
+      let request = requests.find(r => r.email === email) || approved.find(r => r.email === email);
+
+      if (!request) {
+        statusContainer.innerHTML = `
+          <h2>No Reservation Found</h2>
+          <p>Please make a reservation first.</p>
+          <button onclick="window.location.href='book.html'">Go to Booking</button>
+        `;
+        return;
+      }
+
+      let statusClass = '';
+      let cancelBtn = '';
+
+      if (request.status === 'Pending') {
+        statusClass = 'pending';
+        cancelBtn = `<button onclick="cancelReservation()">Cancel Reservation</button>`;
+      } else if (request.status === 'Approved') {
+        statusClass = 'approved';
+      } else if (request.status === 'Cancelled') {
+        statusClass = 'cancelled';
+      }
+
+      statusContainer.innerHTML = `
+        <h2>Hello, ${request.name}!</h2>
+        <p>Your reservation status is:</p>
+        <div class="status ${statusClass}">${request.status}</div>
+        ${cancelBtn}
+      `;
+    }
+
+    function cancelReservation() {
+      let requests = JSON.parse(localStorage.getItem('requests') || '[]');
+      const index = requests.findIndex(r => r.email === email && r.status === 'Pending');
+
+      localStorage.setItem('currentUserEmail', email);
+
+      if (index !== -1) {
+        requests[index].status = 'Cancelled';
+        localStorage.setItem('requests', JSON.stringify(requests));
+        alert('Reservation cancelled.');
+        loadStatus();
+      } else {
+        alert('Unable to cancel. Reservation may already be processed.');
+      }
+    }
+
+
+    loadStatus();
+  </script>
+
+  
+</body>
+</html>

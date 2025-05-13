@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin Panel</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f1f1f1;
+    }
+
+    .sidebar {
+      width: 220px;
+      background: #2c3e50;
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      padding: 20px 0;
+      color: #ecf0f1;
+      text-align: center;
+    }
+
+    .sidebar h4 {
+      margin: 10px 0 30px;
+      font-size: 18px;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .sidebar ul li {
+      padding: 12px 25px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .sidebar ul li:hover,
+    .sidebar ul li.active {
+      background: #5f768d;
+    }
+
+    .sidebar a {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.sidebar a:hover {
+  color: #65939e;
+  text-decoration: underline;
+}
+
+
+    .main-content {
+      margin-left: 220px;
+      padding: 30px;
+    }
+
+    .admin-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+    }
+
+    .card {
+      padding: 25px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    table img {
+      width: 60px;
+      height: auto;
+      border-radius: 5px;
+    }
+
+    .badge {
+      padding: 5px 10px;
+      font-size: 0.9em;
+    }
+
+    .form-control,
+    textarea {
+      margin-bottom: 10px;
+    }
+
+    .styled-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 30px;
+      background-color: #ffffff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .styled-table thead {
+      background-color: #00796b;
+      color: #ffffff;
+    }
+
+    .styled-table th, 
+    .styled-table td {
+      padding: 16px 20px;
+      text-align: left;
+      font-size: 0.95em;
+    }
+
+    .styled-table tbody tr {
+      border-bottom: 1px solid #dddddd;
+      transition: background-color 0.2s ease-in-out;
+    }
+
+    .styled-table tbody tr:hover {
+      background-color: #f1f7f6;
+    }
+
+    .status {
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.85em;
+      font-weight: bold;
+      text-align: center;
+      display: inline-block;
+    }
+
+    .status.pending {
+      background-color: #fff3cd;
+      color: #856404;
+    }
+
+    .status.approved {
+      background-color: #d4edda;
+      color: #155724;
+    }
+
+    .status.rejected {
+      background-color: #f8d7da;
+      color: #721c24;
+    }
+
+    .action-btn {
+      background-color: #00796b;
+      color: white;
+      padding: 6px 12px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.85em;
+      transition: background-color 0.3s ease;
+      margin-right: 5px;
+    }
+
+    .action-btn:hover {
+      background-color: #004d40;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <img src="logo.png" alt="My Logo" width="100">
+    <h4>Binubuwakan Admin</h4>
+    <ul>
+      <li><a href="request.html">Requests</a></li>
+      <li class="active">Approved Requests</li>
+      <li><a href="admin.html">Maintenance</a></li>
+      <li><a href="report.html">Report Lists</a></li>
+    </ul>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <div class="admin-header">
+      <h3>Approved Requests</h3>
+      <div><strong>Administrator</strong></div>
+      <button onclick="logout()" class="btn btn-danger btn-sm">Logout</button>
+    </div>
+
+    <table id="requestsTable" class="styled-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Message</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Requests will appear here -->
+      </tbody>
+    </table>
+
+   
+  </div>
+
+  <script>
+    function loadApprovedRequests() {
+      const tableBody = document.querySelector('#requestsTable tbody');
+      tableBody.innerHTML = '';
+
+      const approvedRequests = JSON.parse(localStorage.getItem('approvedRequests') || '[]');
+
+      approvedRequests.forEach(req => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${req.name}</td>
+          <td>${req.message}</td>
+          <td><span class="status approved">${req.status}</span></td>
+        `;
+        tableBody.appendChild(row);
+      });
+    }
+
+    loadApprovedRequests();
+
+    function logout() {
+    window.location.href = "index.html"; 
+  }
+  </script>
+
+</body>
+</html>
