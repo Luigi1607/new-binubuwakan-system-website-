@@ -133,69 +133,48 @@
   </header>
 
   <div class="status-container" id="statusContent">
+<h1>PENDING STATUS</h1>
+<h3>Please wait for the approval of your requests</h3>
     <!-- Status will be loaded here dynamically -->
-  </div>
+  
   <div style="text-align: center; margin: 40px 0;">
     <a href="book.html" class="book-button">GO BACK</a>
   </div>
   
   <script>
-    const email = localStorage.getItem('currentUserEmail'); // Assume current user email is stored
-    const statusContainer = document.getElementById('statusContent');
+   <script>
+  function submitBookingForm(event) {
+    event.preventDefault();
 
-    function loadStatus() {
-      const requests = JSON.parse(localStorage.getItem('requests') || '[]');
-      const approved = JSON.parse(localStorage.getItem('approvedRequests') || '[]');
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
 
-      let request = requests.find(r => r.email === email) || approved.find(r => r.email === email);
-
-      if (!request) {
-        statusContainer.innerHTML = `
-          <h2>No Reservation Found</h2>
-          <p>Please make a reservation first.</p>
-          <button onclick="window.location.href='book.html'">Go to Booking</button>
-        `;
-        return;
-      }
-
-      let statusClass = '';
-      let cancelBtn = '';
-
-      if (request.status === 'Pending') {
-        statusClass = 'pending';
-        cancelBtn = `<button onclick="cancelReservation()">Cancel Reservation</button>`;
-      } else if (request.status === 'Approved') {
-        statusClass = 'approved';
-      } else if (request.status === 'Cancelled') {
-        statusClass = 'cancelled';
-      }
-
-      statusContainer.innerHTML = `
-        <h2>Hello, ${request.name}!</h2>
-        <p>Your reservation status is:</p>
-        <div class="status ${statusClass}">${request.status}</div>
-        ${cancelBtn}
-      `;
+    if (!name || !email) {
+      alert('Please fill in all fields.');
+      return;
     }
 
-    function cancelReservation() {
-      let requests = JSON.parse(localStorage.getItem('requests') || '[]');
-      const index = requests.findIndex(r => r.email === email && r.status === 'Pending');
+    const newRequest = {
+      name: name,
+      email: email,
+      status: 'Pending'
+    };
 
-      localStorage.setItem('currentUserEmail', email);
+    // Get existing requests or start new list
+    const existingRequests = JSON.parse(localStorage.getItem('requests') || '[]');
 
-      if (index !== -1) {
-        requests[index].status = 'Cancelled';
-        localStorage.setItem('requests', JSON.stringify(requests));
-        alert('Reservation cancelled.');
-        loadStatus();
-      } else {
-        alert('Unable to cancel. Reservation may already be processed.');
-      }
-    }
+    // Save email to track current user
+    localStorage.setItem('currentUserEmail', email);
 
+    // Add the new request
+    existingRequests.push(newRequest);
+    localStorage.setItem('requests', JSON.stringify(existingRequests));
 
-    loadStatus();
+    // Redirect to status page
+    window.location.href = 'book.html';
+  }
+</script>
+
   </script>
 
   
